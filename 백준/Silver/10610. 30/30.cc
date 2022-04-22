@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 using namespace std;
 
@@ -10,24 +9,15 @@ int main(){
     string N;
     cin>>N;
     int res=0;
-    bool chk=false;
-    vector<int> v;
-    
-    for(int i=0;i<N.size();i++){
-        if(N[i]=='0') chk=true;
-        res+=N[i]-'0';
-        v.push_back(N[i]-'0');
-    }
-    if(chk&&res%3==0){
-        sort(v.begin(),v.end(),greater<int>());
-        for(auto i:v){
-            cout<<i;
-        }
-    }
+    sort(N.begin(),N.end(),greater<char>());
+    if(N[N.size()-1]!='0') cout<<-1<<'\n';
     else{
-        cout<<"-1"<<'\n';
+        for(auto i:N){
+            res+=i-'0';
+        }
+        if(res%3==0) cout<<N;
+        else cout<<-1<<'\n';
     }
-
 
     return 0;
 }
