@@ -8,15 +8,13 @@ int main(){
     cin.tie(NULL);
     cout.tie(NULL);
     string s;
-    
+    string tmp;
     vector<string> v;
 
     cin>>s;
     for(int i=0;i<s.size();i++){
-        string tmp;
-        for(int j=i;j<s.size();j++){
-            tmp+=s[j];
-        }
+        
+        tmp=s.substr(i,s.size()-i);
         v.push_back(tmp);
     }
     sort(v.begin(),v.end());
