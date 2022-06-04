@@ -1,3 +1,4 @@
+//문제를 잘못 이해했었음. 테스트 5를 해보고 겨우 이해했네
 #include <string>
 #include <vector>
 
@@ -5,7 +6,7 @@ using namespace std;
 
 vector<int> solution(vector<int> progresses, vector<int> speeds) {
     vector<int> answer,days;
-    int cnt=1;
+    int cnt=0;
     for(int i=0;i<progresses.size();i++){
         int res=100-progresses[i];
         if(res%speeds[i]){
@@ -15,9 +16,9 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
     }
     
     while(!days.empty()){
-        cnt=1;
+        cnt=0;
         int cur=days.front();
-        for(int i=1;i<days.size();i++){
+        for(int i=0;i<days.size();i++){
             if(cur>=days[i]){
                 cnt++;
             }
