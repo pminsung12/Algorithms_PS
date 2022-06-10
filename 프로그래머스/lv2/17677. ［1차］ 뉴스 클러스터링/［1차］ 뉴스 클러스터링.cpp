@@ -25,21 +25,21 @@ int solution(string str1, string str2) {
     }
     for(int i=0;i<str2.length();i++){
         s=processing(str2.substr(i,2));
-        if(!s.empty()) v2.emplace_back(s);
+        if(!s.empty()) v2.emplace_back(s);//빈문자열이면 추가x
     }
-    v2size=v2.size();
+    v2size=v2.size();//밑에서 원소 삭제시키니까 이후에 합집합 계산할 때 위해서 저장해두기
     for(int i=0;i<v1.size();i++){
         for(int j=0;j<v2.size();j++){
             if(v1[i]==v2[j]) {
                 cnt++;
-                v2.erase(v2.begin() + j);
+                v2.erase(v2.begin() + j);//한번 센 원소는 원활한 카운트를 위해 제거해주기
                 break;
             }
         }
     }
     if(!cnt&&!(v1.size()+v2size-cnt)) return 65536;
     double result=(double)cnt/(v1.size()+v2size-cnt);
-    answer=floor(result*65536);
+    answer=floor(result*65536);//소수점자리 제거
     
     return answer;
 }
