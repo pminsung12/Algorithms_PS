@@ -1,0 +1,5 @@
+def solution(numbers):
+    #문자열을 3번씩 반복해서 비교하기 최소한자리이므로 최대 3자리를 맞추기위해서
+    numbers=sorted(list(map(str,numbers)),key=lambda x:x*3, reverse=True)
+    
+    return str(int(''.join(numbers))) #000일 경우 000이 아니라 0이 출력되도록 함.
