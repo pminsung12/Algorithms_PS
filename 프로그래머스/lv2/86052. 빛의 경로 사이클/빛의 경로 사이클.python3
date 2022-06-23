@@ -1,0 +1,40 @@
+dx=[1,0,-1,0]#우 하 좌 상
+dy=[0,-1,0,1]
+def solution(grid):
+    answer = []
+    global visited, n, m
+    n=len(grid)
+    m=len(grid[0])
+    visited=[[[False for _ in range(4)] for _ in range(m)] for _ in range(n)]
+    for nx in range(n):
+        for ny in range(m):
+            for d in range(4):
+                if not visited[nx][ny][d]:
+                    res=simul(nx,ny,d,grid)
+                    if res!=0:
+                        answer.append(res)
+    answer.sort()
+    return answer
+
+def simul(nx,ny,nd,grid):
+    global visited
+    x,y,d=nx,ny,nd
+    cnt=0
+    visited[nx][ny][nd]=True
+    while True:
+        x=(x+dx[d])%n
+        y=(y+dy[d])%m
+        cnt+=1
+        
+        if grid[x][y]=='R':
+            d=(d+1)%4
+        elif grid[x][y]=='L':
+            d=(d-1)%4
+        if visited[x][y][d]:
+            if(x,y,d)==(nx,ny,nd):
+                return cnt
+            else:
+                return 0
+        visited[x][y][d]=True
+            
+        
