@@ -42,7 +42,6 @@ def solution(places):
     for i in places:
         answer.append(bfs(i))
         
-#         comprehension failed
-#         graph.append(list(j) for j in i)
+#         graph.append([list(j) for j in i])
     
     return answer
