@@ -1,5 +1,4 @@
 from collections import defaultdict
-from itertools import combinations
 
 def solution(clothes):
     answer = 0
@@ -12,8 +11,7 @@ def solution(clothes):
     val=list(dic.values())
     
     for i in val:
-        cnt*=(len(i)+1)
+        cnt*=(len(i)+1) #선택안하는거 포함 +1
         
     
-    
-    return cnt-1
+    return cnt-1 #다 선택안하는거 -1
