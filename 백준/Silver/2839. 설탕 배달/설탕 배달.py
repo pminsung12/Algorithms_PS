@@ -1,11 +1,11 @@
 N=int(input())
-lst=[]
-a=0
-for a in range(0,N//3+1):
-    b=(N-3*a)//5
-    if(3*a+5*b==N):
-        lst.append(a+b)
-if not lst or N==0:
+b=0
+chk=0
+for b in range(N//5,-1,-1):
+    if((N-5*b)%3==0):
+        chk=1
+        break
+if  chk==0:
     print(-1)
 else:
-    print(min(lst))
+    print(b+(N-5*b)//3)
