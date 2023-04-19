@@ -2,27 +2,15 @@ import sys
 input=sys.stdin.readline
 
 N,k=list(map(int,input().split()))
-lst=[_ for _ in range(2,N+1)]
-# print(lst)
+lst=[True]*(N+1)
 
 res=0
 for i in range(2,N+1):
-    j=0
-    while True:
-        # print(j,"j번째")
-        length=len(lst)
-        if j==length:
-            break
-        if lst[j]%i==0:
-            res=lst.pop(j)
-            j-=1
-            k-=1
-            # print("res", res)
-            # print(lst, len(lst))
-            
-        if not k:
-            break
-        j+=1
-    if not k:
-        break
-print(res) 
+    for j in range(i,N+1,i): #i 배수만큼 돌기
+        if lst[j] != False:
+            lst[j]=False
+            res+=1
+            if res==k:
+                print(j)
+                sys.exit()
+    
