@@ -4,11 +4,10 @@ def solution(s):
     z_cnt=0
     
     while(s!='1'):
-        for i in range(len(s)):
-            if s[i]=='0':
-                z_cnt+=1
-        s=format(len(s.replace('0','')),'b')
+        one_cnt = s.count('1')
+        z_cnt+=len(s)-one_cnt
         
+        s=bin(one_cnt)[2:]
         cnt+=1
     
     return [cnt,z_cnt]
