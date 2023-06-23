@@ -1,6 +1,6 @@
 from itertools import product # 중복순열
 
-def userSpent(emoticons, ratio, user_rate):
+def userSpent(emoticons, ratio, user_rate): # 유저가 조건을 만족해서 사는 이모티콘 총합
     return sum([emoticons[i]*(1-(ratio[i]/100)) for i in range(len(emoticons)) if ratio[i]>=user_rate])
 
 def solution(users, emoticons):
