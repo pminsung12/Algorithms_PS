@@ -1,11 +1,12 @@
 def solution(n, k):
     answer = 0
-    changed=[]
+    changed=''
     while(n!=0):
-        changed.insert(0,str(n%k))
-        n//=k
-    number=''.join(changed)
-
+        n,mod=divmod(n,k)
+        changed+=str(mod)
+    number=changed[::-1]
+    number=number.split('0')
+    print(number)
     def isPrimeNumber(n):
         if n==0 or n==1:
             return False
@@ -15,22 +16,8 @@ def solution(n, k):
                 return False
         return True
     
-    if len(number)==1:
-        if isPrimeNumber(int(number)):
-            return 1
-        else:
-            return 0
-    
-    pn=""
-    for i in number:
-        if i=='0':
-            if isPrimeNumber(int(pn)):
+    for k in number:
+        if k.isdigit():
+            if isPrimeNumber(int(k)):
                 answer+=1
-            pn=""
-        
-        pn+=i
-    
-    if isPrimeNumber(int(pn)):
-        answer+=1
-        
     return answer
