@@ -9,11 +9,15 @@ using namespace std;
 int n, m;
 
 int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
     int T;
-    scanf("%d", &T);
+    cin >> T;
 
     for (int testCase = 1; testCase <= T; testCase++) {
-        scanf("%d %d", &n, &m);
+        cin >> n >> m;
         
         unordered_set<string> words;
         int cnt=0;
@@ -29,8 +33,7 @@ int main() {
             if(words.find(word)!=words.end()) 
                 cnt++;
         }
-        
-        printf("#%d %d\n", testCase, cnt);
+        cout << '#' << testCase << ' ' << cnt << endl;
     }
 
     return 0;
