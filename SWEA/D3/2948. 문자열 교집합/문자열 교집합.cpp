@@ -7,6 +7,7 @@
 using namespace std;
 
 int n, m;
+unordered_set<string> words;
 
 int main() {
     ios::sync_with_stdio(false);
@@ -19,7 +20,6 @@ int main() {
     for (int testCase = 1; testCase <= T; testCase++) {
         cin >> n >> m;
         
-        unordered_set<string> words;
         int cnt=0;
         string word;
         
@@ -28,12 +28,13 @@ int main() {
             words.emplace(word);
         }
         
-        for(int i=0; i<m; i++){
+        for(int j=0; j<m; j++){
             cin >> word;
             if(words.find(word)!=words.end()) 
                 cnt++;
         }
         cout << '#' << testCase << ' ' << cnt << endl;
+        words.clear();
     }
 
     return 0;
