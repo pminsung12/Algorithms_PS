@@ -1,0 +1,2 @@
+select MIN(DATETIME)
+from ANIMAL_INS
