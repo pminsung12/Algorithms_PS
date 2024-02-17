@@ -1,2 +1,3 @@
-select IFNULL(Count(distinct NAME), null)
+select Count(distinct NAME)
 from ANIMAL_INS
+where name is not null
