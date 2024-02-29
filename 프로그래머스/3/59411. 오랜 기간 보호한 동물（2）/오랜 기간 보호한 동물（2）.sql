@@ -1,9 +1,6 @@
-with cte as (select animal_id, i.name, timestampdiff(day, i.datetime, o.datetime) timediff
+select animal_id, i.name
 from animal_ins i
 join animal_outs o
-using (animal_id)
-order by timediff desc
-limit 2)
-
-select animal_id, name
-from cte
+using (animal_id, animal_type, name)
+order by timestampdiff(day, i.datetime, o.datetime) desc
+limit 2
