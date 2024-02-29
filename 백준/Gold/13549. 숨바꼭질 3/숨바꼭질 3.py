@@ -15,6 +15,9 @@ def dijkstra(start):
         if distance[n] < dist :
             continue
         
+        if distance[y] < dist:
+            break
+        
         # X-1
         cost=distance[n]+1
         if n-1>=0 and cost < distance[n-1]:
