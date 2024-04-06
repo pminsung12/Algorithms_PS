@@ -8,7 +8,7 @@ class Solution {
                 if(c>'z'){
                     c-=26;
                 }
-                if(skip.contains(String.valueOf(c))){
+                if (skip.indexOf(c) != -1) {
                     j-=1;
                 }
             }
