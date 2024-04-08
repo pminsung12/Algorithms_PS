@@ -3,7 +3,7 @@ import java.util.stream.*;
 
 class Solution {
     public String solution(String X, String Y) {
-        String answer = "";
+        StringBuilder answer = new StringBuilder();
         Map<String, Integer> xMap = new HashMap<>();
         Map<String, Integer> yMap = new HashMap<>();
 
@@ -25,9 +25,13 @@ class Solution {
             }
         }
         
-        String result=list.stream().sorted(Collections.reverseOrder()).collect(Collectors.joining());
-        if(result.isEmpty()) return "-1";
-        if(result.replaceAll("0", "").isEmpty()) return "0";
-        return result;
+        for(String s: list){
+            answer.append(s);
+        }
+        answer.reverse();
+        
+        if(answer.length()==0) return "-1";
+        if(answer.toString().replaceAll("0", "").isEmpty()) return "0";
+        return answer.toString();
     }
 }
