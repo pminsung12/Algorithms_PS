@@ -1,7 +1,7 @@
 import java.util.*;
 
 class Solution {
-    public int[] solution(String[] genres, int[] plays) {
+    public List<Integer> solution(String[] genres, int[] plays) {
         List<Integer> answerList = new ArrayList<>();
         Map<String, Integer> total = new HashMap<>();
         Map<String, TreeMap<Integer, Integer>> genreMap = new HashMap<>();
@@ -10,11 +10,11 @@ class Solution {
         for(int i=0; i<genres.length; i++){
             total.put(genres[i], total.getOrDefault(genres[i],0)+plays[i]);
             genreMap
-                .computeIfAbsent(genres[i], k -> new TreeMap<>((a, b) -> {
+                .computeIfAbsent(genres[i], k -> new TreeMap<>((a, b) -> { // 키가 존재하지 않으면 새로운 treemap생성
                     if (plays[a] == plays[b]) {
-                        return a - b;
+                        return a - b; // 재생횟수가 같다면 고유번호가 빠른 순으로 정렬
                     } else {
-                        return plays[b] - plays[a];
+                        return plays[b] - plays[a]; // 재생횟수를 기준으로 내림차순 정렬
                     }
                 }))
                 .put(i, plays[i]);
@@ -35,6 +35,6 @@ class Solution {
             }
         }
         
-        return answerList.stream().mapToInt(Integer::intValue).toArray();
+        return answerList;
     }
 }
