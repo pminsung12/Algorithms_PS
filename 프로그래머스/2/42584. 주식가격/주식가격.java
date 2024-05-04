@@ -3,16 +3,22 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] prices) {
         int[] answer = new int[prices.length];
+        Stack<Integer> stkInt = new Stack<>();
         
-        for(int i=0; i<prices.length-1; i++){
-            for(int j=i+1; j<prices.length; j++){
-                // 일단 1초 뒤에 가격이 변동되기 때문에 +1은 무조건
-                answer[i]+=1;
-                if(prices[i]>prices[j]){ // 가격이 떨어졌을 때
-                    break;
-                }
+        for(int i=0; i<prices.length; i++){
+            while(!stkInt.empty() && prices[i]<prices[stkInt.peek()]){
+                answer[stkInt.peek()]=i-stkInt.peek();
+                stkInt.pop();
             }
+            
+            stkInt.push(i);
         }
+        
+        while(!stkInt.empty()){
+            answer[stkInt.peek()] = prices.length- stkInt.peek() - 1;
+            stkInt.pop();
+        }
+        
         
         return answer;
     }
