@@ -3,25 +3,20 @@ import java.util.*;
 class Solution {
     public int solution(int[][] triangle) {
         int answer = 0;
-        int[][] dp = new int[triangle.length][];
-        for (int i = 0; i < triangle.length; i++) {
-            dp[i] = Arrays.copyOf(triangle[i], triangle[i].length);
-        }
         
-        for(int i=0; i<dp.length-1; i++){
-            for(int j=0; j<dp[i].length; j++){
-                // 다음줄의 j, j+1  인덱스자리에 현재 값을 더하면 된다.
-                dp[i+1][j]=Math.max(dp[i][j]+triangle[i+1][j], dp[i+1][j]);
-                dp[i+1][j+1]=Math.max(dp[i][j]+triangle[i+1][j+1], dp[i+1][j+1]);
-                
-                if(i==triangle.length-2){
-                    answer = Math.max(Math.max(dp[i+1][j],dp[i+1][j+1]), answer);
-                }
+        // triangle 배열에 바로 memoization
+        for(int i=1; i<triangle.length; i++){
+            // 왼쪽 끝과 오른쪽 끝은 루트가 1개 밖에 없음
+            triangle[i][0]+=triangle[i-1][0];
+            triangle[i][i]+=triangle[i-1][i-1];
+            
+            for(int j=1; j<i; j++){
+                triangle[i][j]+=Math.max(triangle[i-1][j-1], triangle[i-1][j]);
             }
         }
         
-        // System.out.println(Arrays.deepToString(dp));
+        // System.out.println(Arrays.deepToString(triangle));
         
-        return answer;
+        return Arrays.stream(triangle[triangle.length-1]).max().getAsInt();
     }
 }
