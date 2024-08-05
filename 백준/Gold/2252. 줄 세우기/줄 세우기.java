@@ -26,11 +26,11 @@ public class Main {
 
 		for (int m = 1; m <= M; m++) {
 			st = new StringTokenizer(br.readLine());
-			int x = Integer.parseInt(st.nextToken());
-			int y = Integer.parseInt(st.nextToken());
+			int from = Integer.parseInt(st.nextToken());
+			int to = Integer.parseInt(st.nextToken());
 
-			indegree[y] += 1;
-			adjLst.get(x).add(y);
+			indegree[to] += 1;
+			adjLst.get(from).add(to);
 		}
 		
 		topologySort();
@@ -38,7 +38,8 @@ public class Main {
 	}
 
 	static void topologySort() {
-		Queue<Integer> q = new LinkedList<>();
+		ArrayDeque<Integer> q = new ArrayDeque<>();
+		StringBuilder sb = new StringBuilder();
 //		Queue<Integer> res = new LinkedList<>();
 
 		for (int i = 1; i < N + 1; i++) {
@@ -49,26 +50,17 @@ public class Main {
 
 		while (!q.isEmpty()) {
 			int node = q.poll();
-			System.out.printf("%d ", node);
-//			res.offer(node);
+			sb.append(node+" ");
 
-			for (int i : adjLst.get(node)) {
-				indegree[i] -= 1;
+			for (Integer to : adjLst.get(node)) {
+				indegree[to] -= 1;
 
-				if (indegree[i] == 0) {
-					q.offer(i);
+				if (indegree[to] == 0) {
+					q.offer(to);
 				}
 			}
 		}
 		
-//		printQueue(res);
+		System.out.println(sb.toString());
 	}
-	
-//	static void printQueue(Queue<Integer> q) {
-//		while(q.size()>1) {
-//			System.out.printf("%d ", q.poll());
-//		}
-//		System.out.println(q.poll());
-//	}
-
 }
