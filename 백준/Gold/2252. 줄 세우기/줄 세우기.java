@@ -39,7 +39,7 @@ public class Main {
 
 	static void topologySort() {
 		Queue<Integer> q = new LinkedList<>();
-		Queue<Integer> res = new LinkedList<>();
+//		Queue<Integer> res = new LinkedList<>();
 
 		for (int i = 1; i < N + 1; i++) {
 			if (indegree[i] == 0) {
@@ -49,7 +49,8 @@ public class Main {
 
 		while (!q.isEmpty()) {
 			int node = q.poll();
-			res.offer(node);
+			System.out.printf("%d ", node);
+//			res.offer(node);
 
 			for (int i : adjLst.get(node)) {
 				indegree[i] -= 1;
@@ -60,14 +61,14 @@ public class Main {
 			}
 		}
 		
-		printQueue(res);
+//		printQueue(res);
 	}
 	
-	static void printQueue(Queue<Integer> q) {
-		while(q.size()>1) {
-			System.out.printf("%d ", q.poll());
-		}
-		System.out.println(q.poll());
-	}
+//	static void printQueue(Queue<Integer> q) {
+//		while(q.size()>1) {
+//			System.out.printf("%d ", q.poll());
+//		}
+//		System.out.println(q.poll());
+//	}
 
 }
