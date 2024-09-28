@@ -9,7 +9,9 @@ class Main {
 
   public static void main(String[] args) throws IOException{
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     StringTokenizer st = new StringTokenizer(br.readLine());
+    StringBuilder sb = new StringBuilder();
 
     N = Integer.parseInt(st.nextToken());
     M = Integer.parseInt(st.nextToken());
@@ -30,12 +32,16 @@ class Main {
       } else {
         // print
         if(isInTheSameUnion(b, c)){
-          System.out.println("YES");
+          sb.append("YES" + "\n");
         } else{
-          System.out.println("NO");
+          sb.append("NO" + "\n");
         }
       }
     }
+    bw.write(sb.toString());
+    bw.flush();
+    bw.close();
+    br.close();
   }
 
   static void init(){
