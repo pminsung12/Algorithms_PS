@@ -1,66 +1,62 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-public class Main {
+class Main {
+  
+  static int N, M, from, to;
+  static int[] indegree;
+  static StringBuilder sb;
+  static List<Integer>[] adjList;
+  static Queue<Integer> q;
 
-	static int N, M, cnt;
-	static StringTokenizer st;
+  public static void main(String[] args) throws IOException{
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    StringTokenizer st = new StringTokenizer(br.readLine());
+    sb = new StringBuilder();
 
-	static int[] indegree;
-	static List<List<Integer>> adjLst;
+    N = Integer.parseInt(st.nextToken());
+    M = Integer.parseInt(st.nextToken());
 
-	public static void main(String[] args) throws IOException {
+    adjList = new ArrayList[N+1];
+    indegree = new int[N+1];
+    q = new LinkedList<>();
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    for(int n=1; n<=N; n++){
+      adjList[n]=new ArrayList<>();
+    }
 
-		st = new StringTokenizer(br.readLine());
+    for(int m=0; m<M; m++){
+      st = new StringTokenizer(br.readLine());
+      from = Integer.parseInt(st.nextToken());
+      to = Integer.parseInt(st.nextToken());
+      indegree[to]++;
+      adjList[from].add(to);
+    }
 
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
+    for(int n=1; n<=N; n++){
+      if(indegree[n]==0){
+        q.offer(n);
+      }
+    }
+    topologySort();
+    bw.write(sb.toString());
+    bw.flush();
+    bw.close();
+    br.close();
+  }
 
-		indegree = new int[N + 1];
-		adjLst = new ArrayList<>();
-		for (int i = 0; i < N + 1; i++) {
-			adjLst.add(new ArrayList<>());
-		}
+  static void topologySort(){
+    while(!q.isEmpty()){
+      int cur = q.poll();
+      sb.append(cur+" ");
 
-		for (int m = 1; m <= M; m++) {
-			st = new StringTokenizer(br.readLine());
-			int from = Integer.parseInt(st.nextToken());
-			int to = Integer.parseInt(st.nextToken());
-
-			indegree[to] += 1;
-			adjLst.get(from).add(to);
-		}
-		
-		topologySort();
-
-	}
-
-	static void topologySort() {
-		ArrayDeque<Integer> q = new ArrayDeque<>();
-		StringBuilder sb = new StringBuilder();
-//		Queue<Integer> res = new LinkedList<>();
-
-		for (int i = 1; i < N + 1; i++) {
-			if (indegree[i] == 0) {
-				q.offer(i);
-			}
-		}
-
-		while (!q.isEmpty()) {
-			int node = q.poll();
-			sb.append(node+" ");
-
-			for (Integer to : adjLst.get(node)) {
-				indegree[to] -= 1;
-
-				if (indegree[to] == 0) {
-					q.offer(to);
-				}
-			}
-		}
-		
-		System.out.println(sb.toString());
-	}
+      for(int next: adjList[cur]){
+        indegree[next]--;
+        if(indegree[next]==0){
+          q.offer(next);
+        }
+      }
+    }
+  }
 }
