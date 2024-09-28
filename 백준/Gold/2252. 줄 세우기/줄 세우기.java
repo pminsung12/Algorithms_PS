@@ -7,7 +7,6 @@ class Main {
   static int[] indegree;
   static StringBuilder sb;
   static List<Integer>[] adjList;
-  static Queue<Integer> q;
 
   public static void main(String[] args) throws IOException{
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -20,7 +19,6 @@ class Main {
 
     adjList = new ArrayList[N+1];
     indegree = new int[N+1];
-    q = new LinkedList<>();
 
     for(int n=1; n<=N; n++){
       adjList[n]=new ArrayList<>();
@@ -33,12 +31,7 @@ class Main {
       indegree[to]++;
       adjList[from].add(to);
     }
-
-    for(int n=1; n<=N; n++){
-      if(indegree[n]==0){
-        q.offer(n);
-      }
-    }
+    
     topologySort();
     bw.write(sb.toString());
     bw.flush();
@@ -47,12 +40,23 @@ class Main {
   }
 
   static void topologySort(){
+    ArrayDeque<Integer> q = new ArrayDeque<>();
+
+    // 시작점:차수가 0인 노드 queue에 넣기
+    for(int n=1; n<=N; n++){
+      if(indegree[n]==0){
+        q.offer(n);
+      }
+    }
+
     while(!q.isEmpty()){
       int cur = q.poll();
       sb.append(cur+" ");
 
       for(int next: adjList[cur]){
+        // cur -> next 차수 줄이기
         indegree[next]--;
+        // 다음 시작점:차수가 0인 노드 queue에 넣기
         if(indegree[next]==0){
           q.offer(next);
         }
