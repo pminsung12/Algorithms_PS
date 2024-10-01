@@ -1,84 +1,84 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-public class Main {
+class Main {
+  
+  static int N, cost, from, to;
+  static int[] buildTime;
+  static int[] preBuildTime;
+  static int[] indegree;
+  static List<Integer>[] adjList;
 
-	static int N, cnt;
-	static StringTokenizer st;
 
-	static int[] indegree;
-	static int[] preBuildTime;
-	static int[] buildTime;
-	static List<List<Integer>> adjLst;
+  public static void main(String[] args) throws IOException{
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    StringTokenizer st = new StringTokenizer(br.readLine());
+    StringBuilder sb = new StringBuilder();
 
-	public static void main(String[] args) throws IOException {
+    N = Integer.parseInt(st.nextToken());
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
+    buildTime = new int[N+1];
+    preBuildTime = new int[N+1];
+    indegree = new int[N+1];
+    adjList = new ArrayList[N+1];
 
-		indegree = new int[N + 1];
-		preBuildTime = new int[N + 1];
-		buildTime = new int[N + 1];
+    for(int i=0; i<=N; i++){
+      adjList[i] = new ArrayList<>();
+    }
+    
+    for(int to=1; to<=N; to++){
+      st = new StringTokenizer(br.readLine());
+      buildTime[to] = Integer.parseInt(st.nextToken());
 
-		adjLst = new ArrayList<>();
-		for (int i = 0; i < N + 1; i++) {
-			adjLst.add(new ArrayList<>());
-		}
+      while(true){
+        int from = Integer.parseInt(st.nextToken());
 
-		for (int to = 1; to <= N; to++) {
-			st = new StringTokenizer(br.readLine());
-			buildTime[to] = Integer.parseInt(st.nextToken());
+        if(from==-1) break;
 
-			while (true) {
-				int from = Integer.parseInt(st.nextToken());
+        adjList[from].add(to);
+        indegree[to]++;
+      }
+    }
 
-				if (from == -1)
-					break;
+    topologicalSort();
 
-				indegree[to]++;
-				adjLst.get(from).add(to);
-			}
-		}
+    for(int n=1; n<=N; n++){
+      bw.write(String.valueOf(buildTime[n] + "\n"));
+    }
 
-		topologySort();
-		
-        // print result
-        for(int i=1; i<=N; i++){
-            System.out.println(buildTime[i]);
+    bw.flush();
+    bw.close();
+    br.close();
+  }
+
+  static void topologicalSort(){
+    ArrayDeque<Integer> q = new ArrayDeque<>();
+
+    // 진입 차수가 0인 노드를 모두 큐에 삽입
+    for(int n=1; n<=N; n++){
+      if(indegree[n]==0){
+        q.add(n);
+      }
+    }
+
+    while(!q.isEmpty()){
+      int cur = q.poll();
+
+      for(int to:adjList[cur]){
+        // 간선 지워주고
+        indegree[to]--;
+
+        // 이전의 루트와 현재 루트 중 max 값이 to 정점의 preBuildTime
+        preBuildTime[to] = Math.max(preBuildTime[to], buildTime[cur]);
+
+        // 진입차수 0이면 큐에 추가
+        if(indegree[to]==0){
+          q.add(to);
+          buildTime[to] += preBuildTime[to];
         }
-
-	}
-
-	static void topologySort() {
-		ArrayDeque<Integer> q = new ArrayDeque<>();
-		StringBuilder sb = new StringBuilder();
-
-        // 시작점:차수가 0인 노드 queue에 넣기
-		for (int i = 1; i < N + 1; i++) {
-			int maxTime = 0;
-			if (indegree[i] == 0) {
-				q.offer(i);
-			}
-		}
-
-		while (!q.isEmpty()) {
-			int node = q.poll();
-//			sb.append(n + " ");
-
-			for (Integer to : adjLst.get(node)) {
-				indegree[to] -= 1;
-
-				// to 정점으로 오는 시작정점의 buildTime 중 max 깞이 to 정점의 preBuildTime
-				preBuildTime[to] = Math.max(preBuildTime[to], buildTime[node]);
-
-				// 다음 시작점: 차수가 0인 노드 queue에 넣기
-				if (indegree[to] == 0) {
-					buildTime[to] += preBuildTime[to];
-					q.offer(to);
-				}
-			}
-		}
-//		System.out.println(sb.toString());
-	}
+      }
+      cost-=buildTime[cur];
+    }
+  }
 }
