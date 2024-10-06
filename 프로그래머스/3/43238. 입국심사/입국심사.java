@@ -7,7 +7,8 @@ class Solution {
         
         // 이분탐색 -> 시간을 축으로
         long left = 0;
-        long right = times[times.length-1] * (long)n; // 최대 시간: 제일 오래걸리는 작업 시간 * 사람 수
+        // 최대 시간: 제일 오래걸리는 작업 시간 * 사람 수 
+        long right = (long)times[times.length-1] * (long)n; 
         long mid=0L, minTime=0L;
         
         while(left<=right){
