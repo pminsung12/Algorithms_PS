@@ -1,51 +1,60 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-public class Main {
+class Main{
+  
+  static int N, M;
+  static int maxLength;
+  static int[] input;
 
-	static int[] input;
-	static int N, M, start = 0, mid, end = 0, res;
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+ 
+    StringTokenizer st = new StringTokenizer(br.readLine());
+    N = Integer.parseInt(st.nextToken());
+    M = Integer.parseInt(st.nextToken());
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
+    input = new int[N];
+    maxLength=0;
+    
+    st = new StringTokenizer(br.readLine());
+    for(int n=0; n<N; n++){
+        input[n] = Integer.parseInt(st.nextToken());
+        maxLength = Math.max(maxLength, input[n]);
+    }
 
-		st = new StringTokenizer(br.readLine());
-		input = new int[N + 1];
+    int start=0, end=maxLength, mid=0, res=0;
+    long sum=0;
+    while(start<=end){
+      mid = (start+end)/2;
+      sum = getLength(mid);
+      if(sum==M){
+        res=mid;
+        break;
+      }
+      else if(sum<M){
+        // 내리기
+        end = mid -1;
+      } else if(sum>M ){
+        // 올리기
+        start = mid+1;
+        res=mid;
+      }
+    }
+    bw.write(String.valueOf(res));
+    bw.flush();
+    bw.close();
+    br.close();
+  }
 
-		for (int i = 0; i < N; i++) {
-			int num = Integer.parseInt(st.nextToken());
-			input[i] = num;
-			end = Math.max(end, num);
-		}
-
-		while (start <= end) {
-			mid = (start + end) / 2;
-			Long sum = calculateSum(mid);
-			if (sum > M) {
-				start = mid + 1;
-				res = mid;
-			} else if (sum == M) {
-				res = mid;
-				break;
-			} else { // sum < M
-				end = mid - 1;
-			}
-		}
-
-		System.out.println(res);
-
-	}
-	
-	static Long calculateSum(int height) {
-		Long sum=0L;
-		for(int i: input) {
-			if(i-height>0) sum+=(i-height);
-		}
-		
-		return sum;
-	}
-
+  static long getLength(int n){
+    long res=0;
+    for(int i: input){
+      if(i>n){
+        res+=i-n;
+      }
+    }
+    return res;
+  }
 }
