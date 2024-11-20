@@ -5,17 +5,10 @@ class Solution {
         int answer = 0;
         Set<Integer> s = new HashSet<>();
         
-        int[] arr = new int[elements.length * 2];
-
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = elements[i % elements.length];
-        }
-        for(int i=0; i<elements.length; i++){
-            for(int j=1; j<=elements.length; j++){
-                int sum=0;
-                for(int k=0; k<j; k++){
-                    sum+=arr[i+k];
-                }
+        for (int i = 0; i < elements.length; i++) {
+            int sum = 0;
+            for (int len = 1; len <= elements.length; len++) {
+                sum += elements[(i + len - 1) % elements.length];
                 s.add(sum);
             }
         }
