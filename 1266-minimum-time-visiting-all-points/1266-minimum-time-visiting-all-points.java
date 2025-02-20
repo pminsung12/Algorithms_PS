@@ -11,7 +11,7 @@ class Solution {
 
             int xDist = Math.abs(point[0]-x);
             int yDist = Math.abs(point[1]-y);
-            answer += (xDist + yDist - Math.min(xDist,yDist));
+            answer += Math.max(xDist,yDist);
 
             x=point[0];
             y=point[1];
