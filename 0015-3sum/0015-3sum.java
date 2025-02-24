@@ -8,6 +8,9 @@ class Solution {
         // n^3 -> n^2
         int target =0;
         for(int i=0; i<nums.length-2; i++){
+            if(i>0 && nums[i]==nums[i-1]){
+                continue;
+            }
             target = 0 - nums[i];
 
             // 2. 투 포인터
