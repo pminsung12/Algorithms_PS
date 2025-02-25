@@ -3,30 +3,22 @@ class Solution {
         if(arr.length<3){
             return 0;
         }
-        int maxLen = 0;
-        int len = 1;
-        boolean down = false;
-        for(int i=0; i<arr.length-1; i++){
-            if(arr[i]<arr[i+1]){
-                if(down){
-                    down = false;
-                    len=1;
+        
+        int maxLen=0;
+        for(int i=1; i<arr.length-1; i++){
+            if(arr[i-1]<arr[i] && arr[i]>arr[i+1]){
+                int left = i-1;
+                int right = i+1;
+                while(left>0 && arr[left-1]<arr[left]){
+                    left--;
                 }
-                len+=1;
-            } else if(arr[i] > arr[i+1]){
-                down = true;
-                if(len!=1){
-                    len+=1;
-                    maxLen = Math.max(maxLen, len);
+                while(right<arr.length-1 && arr[right]>arr[right+1]){
+                    right++;
                 }
-            } else{
-                // 같을 때
-                down = false;
-                len=1;
+                maxLen = Math.max(maxLen, right-left+1);
             }
         }
 
         return maxLen;
-        
     }
 }
