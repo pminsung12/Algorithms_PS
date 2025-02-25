@@ -1,6 +1,8 @@
 class Solution {
     public int longestMountain(int[] arr) {
-
+        if(arr.length<3){
+            return 0;
+        }
         int maxLen = 0;
         int len = 1;
         boolean down = false;
@@ -17,6 +19,10 @@ class Solution {
                     len+=1;
                     maxLen = Math.max(maxLen, len);
                 }
+            } else{
+                // 같을 때
+                down = false;
+                len=1;
             }
         }
 
