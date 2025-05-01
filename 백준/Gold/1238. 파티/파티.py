@@ -21,7 +21,8 @@ def dijkstra(start):
 n, m ,x = map(int, input().split())
 
 # 단방향임
-# 각각의 학생 집에서 x까지 거리 + x에서 집까지 다익스트라 돌리고
+# x에서 집까지 다익스트라 먼저 돌리고 come 배열 생성
+# 각각의 학생 집에서 x까지 거리 한번 더 돌리고 거리 합침
 # 이것들의 최댓값
 
 adjList = [[] for _ in range(n+1)]
@@ -31,9 +32,9 @@ for i in range(m):
   
 res = []
 max_dist=0
+come = dijkstra(x)
 for i in range(1, n+1):
   go = dijkstra(i)
-  come = dijkstra(x)
   max_dist = max(max_dist, go[x]+come[i])
   
 print(max_dist)
