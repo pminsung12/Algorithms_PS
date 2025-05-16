@@ -1,10 +1,14 @@
-with categorized as(
-    select PRODUCT_ID, PRODUCT_NAME, PRODUCT_CD, CATEGORY, PRICE
-    from food_product
-    where category in ('과자','국', '김치', '식용유')
+-- 코드를 입력하세요
+
+with a as (
+SELECT category, max(price) as max_price
+from FOOD_PRODUCT
+where category in ('과자', '국', '김치', '식용유')
+group by category
 )
 
-select category, price max_price, product_name
-from categorized c
-where price = (select max(price) from categorized a where c.category=a.category)
-order by price desc
+SELECT f.category, a.max_price, f.product_name
+from FOOD_PRODUCT f
+inner join a
+on a.max_price = f.price and a.category = f.category
+order by a.max_price desc
