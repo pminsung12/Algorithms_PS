@@ -1,12 +1,9 @@
-with joined as(
-    select year(sales_date) year, month(sales_date) month, gender, o.user_id
-    from user_info u
-    join online_sale o
-    on u.user_id=o.user_id
-    where gender is not null
-)
+-- 코드를 입력하세요
 
-select year, month, gender, count(distinct user_id) users
-from joined
-group by year, month, gender
-order by year, month, gender
+select extract(year from sales_date) as year, extract(month from sales_date) as month, u.gender, count(distinct o.user_id) as users
+from ONLINE_SALE o
+left join USER_INFO u
+on o.user_id = u.user_id
+where u.gender is not null
+group by extract(year from sales_date), extract(month from sales_date), u.gender
+order by year, month, u.gender, users
