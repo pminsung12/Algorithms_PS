@@ -1,12 +1,14 @@
-with recursive cte(hour) as(
-    select 0 hour
-    union all
-    select hour+1 from cte where hour<23
+-- 코드를 입력하세요
+with cte as (
+    select level-1 as hour
+    from dual
+    connect by level<=24
 )
 
-select c.hour, count(o.animal_id) count
+
+SELECT c.hour as hour, count(o.datetime) as count
 from cte c
 left join animal_outs o
-on hour(o.datetime)=c.hour
-group by hour
-order by hour
+on to_number(to_char(o.datetime, 'HH24')) = c.hour
+group by c.hour
+order by c.hour
