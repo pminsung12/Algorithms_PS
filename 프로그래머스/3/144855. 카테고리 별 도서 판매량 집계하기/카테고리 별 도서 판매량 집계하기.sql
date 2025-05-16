@@ -1,7 +1,7 @@
-select b.category, sum(sales) total_sales
-from book b
-join book_sales s
-on b.book_id=s.book_id
-where s.sales_date like '2022-01%'
-group by category
-order by category
+SELECT b.category, sum(s.sales) as total_sales
+from book_sales s
+left join book b
+on s.book_id = b.book_id
+where trunc(sales_date) between date '2022-01-01' and date '2022-01-31'
+group by b.category
+order by b.category
