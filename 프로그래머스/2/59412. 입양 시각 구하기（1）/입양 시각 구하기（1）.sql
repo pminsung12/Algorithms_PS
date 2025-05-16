@@ -1,5 +1,6 @@
-select Hour(Datetime) Hour, count(*) count
+-- 코드를 입력하세요
+SELECT to_number(to_char(datetime, 'HH24')) as hour, count(*) as count
 from animal_outs
-where Hour(Datetime)>=9 and Hour(Datetime)<20
-group by Hour
-order by Hour
+where to_char(datetime, 'HH24') between '09' and '19'
+group by to_char(datetime, 'HH24')
+order by hour
