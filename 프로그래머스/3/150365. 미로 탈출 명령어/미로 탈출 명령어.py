@@ -21,6 +21,7 @@ def solution(n, m, x, y, r, c, k):
         if cnt == k:
             if (x,y) == (r,c):
                 answer=w
+            return
         
         for i in range(4):
             if answer:
